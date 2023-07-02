@@ -39,7 +39,7 @@ banner_start(){
 
 
 banner_launcher_update(){
-    wget -O"${1}" https://github.com/8Mi-Tech/Shell/raw/main/banner-launcher
+    wget -O"${1}" https://github.com/8Mi-Tech/Banner-Shell/raw/main/banner-launcher
     exit
 }
 
