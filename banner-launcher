@@ -13,8 +13,8 @@ banner_install(){
     fabric_loader_version=`curl -# https://meta.fabricmc.net/v2/versions/loader/$game_version | jq -r .[0].loader.version`
     fabric_installer_version=`curl -# https://meta.fabricmc.net/v2/versions/installer | jq -r .[0].version`
     curl -# -o "fabric-loader.jar" https://meta.fabricmc.net/v2/versions/loader/$game_version/$fabric_loader_version/$fabric_installer_version/server/jar
-    modrinth_getLatestDownloadURL "fabric-api" "$game_version" | 8Mi_Download "FabricAPI.jar"
-    jenkins_getLatestDownloadURL "https://ci.codemc.io/job/MohistMC/job/Banner-$game_version" | 8Mi_Download "BannerCore.jar"
+    modrinth_getLatestDLURL "fabric-api" "$game_version" | 8Mi_Download "FabricAPI.jar"
+    jenkins_getLatestDLURL "https://ci.codemc.io/job/MohistMC/job/Banner-$game_version" | 8Mi_Download "BannerCore.jar"
     if [ ! -d "mods" ]; then
         mkdir "mods"
     fi
