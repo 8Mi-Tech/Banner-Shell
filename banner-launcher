@@ -1,18 +1,18 @@
 #!/bin/bash
-if [ -e 8Mi-MCUpdCore.sh ]; then
-    source 8Mi-MCUpdCore.sh || exit 1
-else
-    wget -O "8Mi-MCUpdCore.sh" https://github.com/8Mi-Tech/Shell/raw/main/8Mi-MCUpdCore.sh
-    source 8Mi-MCUpdCore.sh || exit 1
+
+lib_path="8Mi-MCUpdCore.sh"
+if [ ! -e "$lib_path" ] || [ ! -s "$lib_path" ]; then
+    wget --tries=0 --show-progress -qO "8Mi-MCUpdCore.sh"  ${GITHUB_URL:-"https://github.com"}/8Mi-Tech/Shell/raw/main/8Mi-MCUpdCore.sh
 fi
+source 8Mi-MCUpdCore.sh || exit 1
 
 banner_install(){
     rm -rf ./_tmp-ci
     mkdir ./_tmp-ci/
     game_version=${minecraft_game_version:-"1.20"}
-    fabric_loader_version=`curl -# https://meta.fabricmc.net/v2/versions/loader/$game_version | jq -r .[0].loader.version`
-    fabric_installer_version=`curl -# https://meta.fabricmc.net/v2/versions/installer | jq -r .[0].version`
-    curl -# -o "fabric-loader.jar" https://meta.fabricmc.net/v2/versions/loader/$game_version/$fabric_loader_version/$fabric_installer_version/server/jar
+    fabric_loader_version=`curl https://meta.fabricmc.net/v2/versions/loader/$game_version | jq -r .[0].loader.version`
+    fabric_installer_version=`curl https://meta.fabricmc.net/v2/versions/installer | jq -r .[0].version`
+    wget --show-progress -qO "fabric-loader.jar" https://meta.fabricmc.net/v2/versions/loader/$game_version/$fabric_loader_version/$fabric_installer_version/server/jar
     modrinth_getLatestDLURL "fabric-api" "$game_version" | 8Mi_Download "FabricAPI.jar"
     jenkins_getLatestDLURL "https://ci.codemc.io/job/MohistMC/job/Banner-$game_version" | 8Mi_Download "BannerCore.jar"
     if [ ! -d "mods" ]; then
@@ -39,7 +39,7 @@ banner_start(){
 
 
 banner_launcher_update(){
-    wget -O"${1}" https://github.com/8Mi-Tech/Banner-Shell/raw/main/banner-launcher
+    wget -O"${1}" ${GITHUB_URL:-"https://github.com"}/8Mi-Tech/Banner-Shell/raw/main/banner-launcher
     exit
 }
 
