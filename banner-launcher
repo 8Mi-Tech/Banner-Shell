@@ -2,9 +2,9 @@
 
 lib_path="8Mi-MCUpdCore.sh"
 if [ ! -e "$lib_path" ] || [ ! -s "$lib_path" ]; then
-    wget --tries=0 --show-progress -qO "8Mi-MCUpdCore.sh"  ${GITHUB_URL:-"https://github.com"}/8Mi-Tech/Shell/raw/main/8Mi-MCUpdCore.sh
+    wget --tries=0 --show-progress -qO "$lib_path"  "${GITHUB_URL:-"https://github.com"}""/8Mi-Tech/Shell/raw/main/8Mi-MCUpdCore.sh"
 fi
-source 8Mi-MCUpdCore.sh || exit 1
+source "$lib_path" || exit 1
 
 banner_install(){
     rm -rf ./_tmp-ci
@@ -39,7 +39,7 @@ banner_start(){
 
 
 banner_launcher_update(){
-    wget -O"${1}" ${GITHUB_URL:-"https://github.com"}/8Mi-Tech/Banner-Shell/raw/main/banner-launcher
+    wget -O"${1}" "${GITHUB_URL:-"https://github.com"}""/8Mi-Tech/Banner-Shell/raw/main/banner-launcher"
     exit
 }
 
